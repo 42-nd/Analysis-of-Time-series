@@ -7,7 +7,7 @@ def allan_variance(data):
     tau = 2880
     sigmas = np.array(())
     for i in range(0,len(data)-tau):
-        sigmas = np.hstack((sigmas,(data[i+tau] - data[i])/(tau*30)))
+        sigmas = np.hstack((sigmas,(data[i+tau] - data[i])/tau))
     f.write(str(1/(2*(len(sigmas)-1)) * np.sum(np.diff(sigmas)**2))+" "+str(tau)+'\n')
     print("Дисперсия Аллана: ",1/(2*(len(sigmas)-1)) * np.sum(np.diff(sigmas)**2))
     return sigmas
