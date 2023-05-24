@@ -17,13 +17,13 @@ df = pd.read_csv('D:\Github\Analysis-of-Time-series\Файлы данных РШ
 X = np.arange(df['ds'].shape[0])
 y = np.array(df['y'])*1e6
 
-window = 300
-rank = 10
+window = 500    
+rank = 4
 l, h = hsvd(y, window, rank)
 y = l
 '''The zero-order method'''
 results = {}
-n_points = np.linspace(1, 20.0, num=6)
+n_points = np.linspace(1, 10.0, num=3)
 for j in n_points:
     tet = np.ones(15)*j
     tet_pred = sc.optimize.minimize(loss_f, tet, args=(X, y), method='Powell').x
@@ -33,6 +33,7 @@ for j in n_points:
 tet_pred = results[min(list(results.keys()))][0]
 print(tet_pred, loss_f(tet_pred, X, y))
 plt.plot(X,f(X,tet_pred),c='g')
-plt.plot(X, y)
+plt.plot(X,f(X,tet_pred)+h,c='black')
+plt.plot(X, np.array(df['y'])*1e6)
 
 plt.show()
